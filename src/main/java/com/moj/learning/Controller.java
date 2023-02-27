@@ -17,8 +17,7 @@ import java.util.Locale;
 @RequestMapping("blob")
 public class Controller {
 
-    private String accountName;
-    private String accountKey;
+    private String connectionString = "DefaultEndpointsProtocol=https;AccountName=imgstormoj;AccountKey=rb4zQBzuuYBigtcxzeMfC9FRr7SGWCC3lswIuHQPrWoIx0v0iMWF8RAxX2w18Xi/lGXGv/Ie5Hw4+AStprGLFA==;EndpointSuffix=core.windows.net";
 
 //    @GetMapping
     public String sayHello() {
@@ -32,13 +31,13 @@ public class Controller {
         /*
          * Use your Storage account's name and key to create a credential object; this is used to access your account.
          */
-        StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+        StorageSharedKeyCredential credential = StorageSharedKeyCredential.fromConnectionString(connectionString);
 
         /*
          * From the Azure portal, get your Storage account blob service URL endpoint.
          * The URL typically looks like this:
          */
-        String endpoint = String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName);
+        String endpoint = String.format(Locale.ROOT, "https://%s.blob.core.windows.net", "imgstormoj");
 
         /*
          * Create a BlobServiceClient object that wraps the service endpoint, credential and a request pipeline.
@@ -50,7 +49,7 @@ public class Controller {
          * ContainerClient object that wraps the container's endpoint, credential and a request pipeline (inherited from storageClient).
          * Note that container names require lowercase.
          */
-        BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("imgmojcontainer");
+        BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient("images");
 
         /*
          * Create a client that references a to-be-created blob in your Azure Storage account's container.
